@@ -1,52 +1,40 @@
 #include <iostream>
 using namespace std;
 
-class SnackSlot {
+class UserProfile {
 private:
-    string snackName;
-    double price;
-    int stockQuantity;
+    string username;
+    string password;
 
 public:
     // Constructor
-    SnackSlot(string name, double p, int stock) {
-        snackName = name;
-        price = p;
-        stockQuantity = stock;
+    UserProfile(string user, string pass) {
+        username = user;
+        password = pass;
     }
 
-    // Getters
-    string getSnackName() {
-        return snackName;
+    // Getter only for username
+    string getUsername() {
+        return username;
     }
 
-    double getPrice() {
-        return price;
-    }
-
-    int getStockQuantity() {
-        return stockQuantity;
-    }
-
-    // buySnack function
-    void buySnack(int quantity) {
-        if (stockQuantity >= quantity) {
-            stockQuantity = stockQuantity - quantity;
-            cout << "Dispensing..." << endl;
+    // Update password function
+    void updatePassword(string oldPassword, string newPassword) {
+        if (oldPassword == password) {
+            password = newPassword;
+            cout << "Password updated." << endl;
         }
         else {
-            cout << "Transaction failed: Insufficient stock!" << endl;
+            cout << "Access Denied: Incorrect current password." << endl;
         }
     }
 };
 
 int main() {
-    SnackSlot slot("Chips", 1.50, 5);
+    UserProfile user("ali_dev", "qwerty123");
 
-    slot.buySnack(3);
-    slot.buySnack(4);
-
-    cout << "Remaining Stock: " << slot.getStockQuantity() << endl;
+    user.updatePassword("wrongpass", "newSecurePass!");
+    user.updatePassword("qwerty123", "newSecurePass!");
 
     return 0;
 }
