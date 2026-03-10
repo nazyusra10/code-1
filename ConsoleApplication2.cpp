@@ -1,42 +1,35 @@
 #include <iostream>
-#include <string>
 using namespace std;
-class Thermostat {
+class ParkingMeter {
 private:
-    string roomName;
-    double temperature;
+    int timeRemaining;
+    const int maxTime = 120;
 public:
     // Constructor
-    Thermostat(string r, double t) {
-        roomName = r;
-        if (t >= 16.0 && t <= 30.0)
-            temperature = t;
-        else
-            temperature = 16.0;
+    ParkingMeter() {
+        timeRemaining = 0;
     }
-
     // Getter
-    double getTemperature() {
-        return temperature;
+    int getTimeRemaining() {
+        return timeRemaining;
     }
+    // Function to add time
+    void addTime(int minutes) {
 
-    // Setter with validation
-    void setTemperature(double t) {
+        timeRemaining = timeRemaining + minutes;
 
-        if (t < 16.0 || t > 30.0) {
-            cout << "Error: " << t << "C is outside the hardware limits (16.0C - 30.0C)." << endl;
-        }
-        else {
-            temperature = t;
+        if (timeRemaining > maxTime) {
+            timeRemaining = maxTime;
+            cout << "Max time reached. Excess coins refunded." << endl;
         }
     }
 };
 
 int main() {
-    Thermostat t("Living Room", 22.5);
-    t.setTemperature(35.0);
-    t.setTemperature(18.0);
-    cout << "Current Temp: " << t.getTemperature() << "C" << endl;
 
+    ParkingMeter meter;
+    meter.addTime(60);
+    meter.addTime(90);
+    cout << "Time on meter: " << meter.getTimeRemaining() << " mins" << endl;
     return 0;
 }
