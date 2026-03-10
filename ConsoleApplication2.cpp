@@ -1,40 +1,50 @@
 #include <iostream>
+#include <string>
 using namespace std;
 
-class UserProfile {
+class GameCharacter {
 private:
-    string username;
-    string password;
+    string name;
+    int health;
+    int maxHealth;
 
 public:
-    // Constructor
-    UserProfile(string user, string pass) {
-        username = user;
-        password = pass;
+    // Requirement 13: Constructor
+    GameCharacter(string n, int maxH) {
+        name = n;
+        maxHealth = maxH;
+        health = maxHealth; // Initializes current health equal to maxHealth
     }
 
-    // Getter only for username
-    string getUsername() {
-        return username;
-    }
+    // Requirement 14: Getters
+    string getName() { return name; }
+    int getHealth() { return health; }
 
-    // Update password function
-    void updatePassword(string oldPassword, string newPassword) {
-        if (oldPassword == password) {
-            password = newPassword;
-            cout << "Password updated." << endl;
+    // Requirement 15: takeDamage Setter
+    void takeDamage(int damage) {
+        health -= damage;
+        if (health <= 0) {
+            health = 0; // Clamp to 0
+            cout << "Character has fainted." << endl;
         }
-        else {
-            cout << "Access Denied: Incorrect current password." << endl;
+    }
+
+    // Requirement 16: heal Setter
+    void heal(int amount) {
+        health += amount;
+        if (health > maxHealth) {
+            health = maxHealth; // Clamp to maxHealth
         }
     }
 };
 
 int main() {
-    UserProfile user("ali_dev", "qwerty123");
-
-    user.updatePassword("wrongpass", "newSecurePass!");
-    user.updatePassword("qwerty123", "newSecurePass!");
+    // Example Usage
+    GameCharacter hero("Arthur", 100);
+    hero.takeDamage(120);
+    hero.heal(50);
+    hero.heal(200);
+    cout << "Final Health: " << hero.getHealth() << endl;
 
     return 0;
 }
