@@ -1,35 +1,52 @@
 #include <iostream>
 using namespace std;
-class ParkingMeter {
+
+class SnackSlot {
 private:
-    int timeRemaining;
-    const int maxTime = 120;
+    string snackName;
+    double price;
+    int stockQuantity;
+
 public:
     // Constructor
-    ParkingMeter() {
-        timeRemaining = 0;
+    SnackSlot(string name, double p, int stock) {
+        snackName = name;
+        price = p;
+        stockQuantity = stock;
     }
-    // Getter
-    int getTimeRemaining() {
-        return timeRemaining;
+
+    // Getters
+    string getSnackName() {
+        return snackName;
     }
-    // Function to add time
-    void addTime(int minutes) {
 
-        timeRemaining = timeRemaining + minutes;
+    double getPrice() {
+        return price;
+    }
 
-        if (timeRemaining > maxTime) {
-            timeRemaining = maxTime;
-            cout << "Max time reached. Excess coins refunded." << endl;
+    int getStockQuantity() {
+        return stockQuantity;
+    }
+
+    // buySnack function
+    void buySnack(int quantity) {
+        if (stockQuantity >= quantity) {
+            stockQuantity = stockQuantity - quantity;
+            cout << "Dispensing..." << endl;
+        }
+        else {
+            cout << "Transaction failed: Insufficient stock!" << endl;
         }
     }
 };
 
 int main() {
+    SnackSlot slot("Chips", 1.50, 5);
 
-    ParkingMeter meter;
-    meter.addTime(60);
-    meter.addTime(90);
-    cout << "Time on meter: " << meter.getTimeRemaining() << " mins" << endl;
+    slot.buySnack(3);
+    slot.buySnack(4);
+
+    cout << "Remaining Stock: " << slot.getStockQuantity() << endl;
+
     return 0;
 }
