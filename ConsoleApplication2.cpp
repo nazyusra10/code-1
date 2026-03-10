@@ -2,49 +2,40 @@
 #include <string>
 using namespace std;
 
-class GameCharacter {
+class LoyaltyCard {
 private:
-    string name;
-    int health;
-    int maxHealth;
+    string customerName;
+    int stamps;
 
 public:
-    // Requirement 13: Constructor
-    GameCharacter(string n, int maxH) {
-        name = n;
-        maxHealth = maxH;
-        health = maxHealth; // Initializes current health equal to maxHealth
+    // Requirement 17: Constructor
+    LoyaltyCard(string name) {
+        customerName = name;
+        stamps = 0; // Initializes stamps to 0
     }
 
-    // Requirement 14: Getters
-    string getName() { return name; }
-    int getHealth() { return health; }
-
-    // Requirement 15: takeDamage Setter
-    void takeDamage(int damage) {
-        health -= damage;
-        if (health <= 0) {
-            health = 0; // Clamp to 0
-            cout << "Character has fainted." << endl;
-        }
+    // Requirement 18: Getter
+    int getStamps() {
+        return stamps;
     }
 
-    // Requirement 16: heal Setter
-    void heal(int amount) {
-        health += amount;
-        if (health > maxHealth) {
-            health = maxHealth; // Clamp to maxHealth
+    // Requirement 19: addStamp Setter with trigger logic
+    void addStamp() {
+        stamps++;
+        if (stamps == 10) {
+            cout << "Congratulations " << customerName << "! You earned a free coffee!" << endl;
+            stamps = 0; // Automatically reset stamps to 0
         }
     }
 };
 
 int main() {
     // Example Usage
-    GameCharacter hero("Arthur", 100);
-    hero.takeDamage(120);
-    hero.heal(50);
-    hero.heal(200);
-    cout << "Final Health: " << hero.getHealth() << endl;
+    LoyaltyCard card("Sara");
+    for (int i = 0; i < 10; i++) {
+        card.addStamp();
+    }
+    cout << "Current Stamps: " << card.getStamps() << endl;
 
     return 0;
 }
